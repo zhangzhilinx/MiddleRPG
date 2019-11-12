@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF5280A4-562B-45EA-A4A5-2FAEF582AAC2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MiddleRPG</RootNamespace>
+    <AssemblyName>MiddleRPG</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\BattleUnit.cs" />
+    <Compile Include="Core\Units.cs" />
+    <Compile Include="ResourceMain.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceMain.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FormMiddleRPG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FormMiddleRPG.Designer.cs">
+      <DependentUpon>FormMiddleRPG.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UnitAgent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UnitAgent.Designer.cs">
+      <DependentUpon>UnitAgent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UI\FormMiddleRPG.resx">
+      <DependentUpon>FormMiddleRPG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UnitAgent.resx">
+      <DependentUpon>UnitAgent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ResourceMain.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceMain.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_hero_darktemplar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_monster_hydralisk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_hero_archon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_monster_queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_hero_hightemplar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avatar_monster_ultralisk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wallpaper.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ui_boarder_hero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ui_boarder_monster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_hightemplar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_darktemplar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_archon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_hydralisk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_attack_ultralisk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_dead_general.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

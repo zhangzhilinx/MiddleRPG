@@ -152,8 +152,8 @@ namespace MiddleRPG
 
         public new void Dispose()
         {
-            this.Unit = null;
-            base.Dispose();
+            Unit = null;
+            Dispose(true);
         }
 
         //public static class UtilProgressBar

@@ -347,10 +347,22 @@ namespace MiddleRPG
             agentHeros.Clear();
             agentMonsters.Clear();
 
+            #region 调试代码，以下代码可能有助于发现UnitAgent内存无法被释放的关键原因
+            for (int i = 0; i < 50; i++)
+            {
+                UnitAgent unitAgent = new UnitAgent(new Archon(Guid.NewGuid().ToString()));
+                flayoutHeros.Controls.Add(unitAgent);
+                unitAgent.Dispose();
+            }
+            flayoutHeros.Controls.Clear();
+            #endregion
+
             foreach (KeyValuePair<Hero, bool> heroWithPermit in herosWithPermit)
             {
-                UnitAgent gameUnit = new UnitAgent(heroWithPermit.Key);
-                gameUnit.PermitAttack = heroWithPermit.Value;
+                UnitAgent gameUnit = new UnitAgent(heroWithPermit.Key)
+                {
+                    PermitAttack = heroWithPermit.Value
+                };
                 gameUnit.AttackMouseDown += GameUnitHero_MouseDown;
                 agentHeros.Add(heroWithPermit.Key.Id, gameUnit);
                 flayoutHeros.Controls.Add(gameUnit);

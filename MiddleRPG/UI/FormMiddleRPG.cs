@@ -21,8 +21,10 @@ namespace MiddleRPG
         private readonly Dictionary<string, List<UnitAgent>> agentHeros = new Dictionary<string, List<UnitAgent>>();
         private readonly Dictionary<string, List<UnitAgent>> agentMonsters = new Dictionary<string, List<UnitAgent>>();
 
-        // 回合循环控制器
-        // 由于它实现了IDisposable接口，所以在Dispose方法中执行它的Dispose()方法
+        /// <summary>
+        /// 回合循环控制器
+        /// 由于它实现了IDisposable接口，所以在Dispose方法中执行它的Dispose()方法
+        /// </summary>
         private IEnumerator<Winner> roundLoop = null;
 
         public FormMiddleRPG()

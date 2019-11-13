@@ -110,6 +110,7 @@
             this.btnSceneSave.TabIndex = 4;
             this.btnSceneSave.Text = "保存游戏";
             this.btnSceneSave.UseVisualStyleBackColor = false;
+            this.btnSceneSave.Click += new System.EventHandler(this.btnSceneSave_Click);
             // 
             // tableLayoutPanel1
             // 

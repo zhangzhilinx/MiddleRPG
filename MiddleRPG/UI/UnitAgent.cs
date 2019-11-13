@@ -1,7 +1,6 @@
 ﻿using MiddleRPG.Core;
 using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MiddleRPG
@@ -9,6 +8,7 @@ namespace MiddleRPG
     //[ToolboxItem(true)]
     //[ToolboxItemFilter("自定义控件")]
     //[DisplayName("GameRole")]
+    [Serializable]
     public partial class UnitAgent : UserControl
     {
         private ToolTip tooltip = new ToolTip();

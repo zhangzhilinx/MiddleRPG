@@ -5,6 +5,7 @@ using System.Text;
 
 namespace MiddleRPG.Core
 {
+    [Serializable]
     class DarkTemplar : Hero
     {
         public DarkTemplar(string id) : base(
@@ -21,6 +22,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class HighTemplar : Hero
     {
         public HighTemplar(string id) : base(
@@ -37,6 +39,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Archon : Hero
     {
         public Archon(string id) : base(
@@ -53,6 +56,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Hydralisk : Monster
     {
         public Hydralisk(string id) : base(
@@ -69,6 +73,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Queen : Monster
     {
         public Queen(string id) : base(
@@ -85,6 +90,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Ultralisk : Monster
     {
         public Ultralisk(string id) : base(

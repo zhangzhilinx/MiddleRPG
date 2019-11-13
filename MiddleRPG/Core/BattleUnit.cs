@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace MiddleRPG.Core
 {
+    [Serializable]
     public class BattleUnit
     {
         public string Id { get; set; }
@@ -63,6 +65,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Hero : BattleUnit
     {
         public Hero(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)
@@ -71,6 +74,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Monster : BattleUnit
     {
         public Monster(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)

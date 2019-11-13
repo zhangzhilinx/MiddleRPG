@@ -16,13 +16,13 @@ namespace MiddleRPG
         public BattleUnit Unit {
             get { return unit; }
             private set {
-                if(unit != null)
+                if (unit != null)
                 {
                     unit.HealthChanged -= OnUnitHealthChanged;
                     unit.UnderAttack -= OnUnitUnderAttack;
                 }
                 unit = value;
-                if(unit != null)
+                if (unit != null)
                 {
                     unit.HealthChanged += new BattleUnit.OnHealthChangedHandler(OnUnitHealthChanged);
                     unit.UnderAttack += new BattleUnit.OnUnderAttackHandler(OnUnitUnderAttack);
@@ -148,6 +148,12 @@ namespace MiddleRPG
             {
                 AttackMouseDown(this, e);
             }
+        }
+
+        public new void Dispose()
+        {
+            this.Unit = null;
+            base.Dispose();
         }
 
         //public static class UtilProgressBar

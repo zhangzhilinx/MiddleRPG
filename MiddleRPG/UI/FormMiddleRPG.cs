@@ -18,6 +18,10 @@ namespace MiddleRPG
             Monsters    // 怪物/敌方
         };
 
+        /// <summary>
+        /// 游戏存档路径设在游戏所在路径下的game.sav文件
+        /// 存档和读档只允许在玩家回合时进行
+        /// </summary>
         private const string pathGameArchive = "./game.sav";
 
         private Dictionary<string, UnitAgent> agentHeros = new Dictionary<string, UnitAgent>();
@@ -68,6 +72,8 @@ namespace MiddleRPG
             timerRound.Interval = 1000;
         }
 
+        // ControlRound()（实际被编译器编译为类）通常在不停循环执行，要小心管理这里的内存
+        // 在一段局部代码块中，如果遇到yield使得仍未退出该局部块之前，该局部代码块中引用的对象会被GC认为是可达的，从而无法被GC回收
         private IEnumerable<Winner> ControlRound(bool isTurnToMonster)
         {
             Winner winner = Winner.Waiting;
@@ -86,7 +92,7 @@ namespace MiddleRPG
             {
                 AllowPlayerToArchive(true);
             }
-            yield return winner;
+            yield return winner;    // 初始化就绪
 
             Random rand = new Random();
             while (true)
@@ -118,6 +124,7 @@ namespace MiddleRPG
                             if (livingAgentHeros.Count > 0)
                             {   // 还有存活的英雄
                                 monster.Attack(livingAgentHeros[rand.Next(0, livingAgentHeros.Count)].Unit);
+                                livingAgentHeros = null;
                                 yield return winner;
                             }
                             else
@@ -178,6 +185,7 @@ namespace MiddleRPG
                             lblRoundIndicator.Text = "敌方回合";
                             timerRound.Start();
                         }
+                        livingMonsters = null;
                         yield return winner;
                     }
                     else
@@ -253,7 +261,7 @@ namespace MiddleRPG
             string id = (string)e.Data.GetData(DataFormats.Text);
             if (agentHeros.ContainsKey(id))
             {
-                BattleUnit battleUnitHero = (BattleUnit)agentHeros[id]?.Unit;
+                BattleUnit battleUnitHero = agentHeros[id]?.Unit;
                 if (battleUnitHero != null)
                 {
                     Hero hero = (Hero)battleUnitHero;
@@ -276,6 +284,7 @@ namespace MiddleRPG
                         ReadyForRound();
                     }
                 }
+                battleUnitHero = null;
             }
         }
 
@@ -302,6 +311,8 @@ namespace MiddleRPG
             {
                 formatter.Serialize(stream, herosWithPermit);
                 formatter.Serialize(stream, monsters);
+                herosWithPermit = null;
+                monsters = null;
                 stream.Flush();
             }
         }
@@ -316,12 +327,25 @@ namespace MiddleRPG
             {
                 herosWithPermit = (List<KeyValuePair<Hero, bool>>)formatter.Deserialize(stream);
                 monsters = (List<Monster>)formatter.Deserialize(stream);
+                stream.Dispose();
             }
 
-            agentHeros.Clear();
-            agentMonsters.Clear();
+            foreach (UnitAgent unitAgent in agentHeros.Values)
+            {
+                unitAgent.AttackMouseDown -= GameUnitHero_MouseDown;
+                unitAgent.Dispose();
+            }
+            foreach (UnitAgent unitAgent in agentMonsters.Values)
+            {
+                unitAgent.DragEnter -= GameUnitMonster_DragEnter;
+                unitAgent.DragDrop -= GameUnitMonster_DragDrop;
+                unitAgent.Dispose();
+            }
+
             flayoutHeros.Controls.Clear();
             flayoutMonsters.Controls.Clear();
+            agentHeros.Clear();
+            agentMonsters.Clear();
 
             foreach (KeyValuePair<Hero, bool> heroWithPermit in herosWithPermit)
             {
@@ -341,6 +365,9 @@ namespace MiddleRPG
                 agentMonsters.Add(monster.Id, gameUnit);
                 flayoutMonsters.Controls.Add(gameUnit);
             }
+
+            herosWithPermit = null;
+            monsters = null;
         }
     }
 }

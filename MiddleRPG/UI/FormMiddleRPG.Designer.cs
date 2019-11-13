@@ -99,6 +99,7 @@
             this.btnSceneLoad.TabIndex = 3;
             this.btnSceneLoad.Text = "恢复游戏";
             this.btnSceneLoad.UseVisualStyleBackColor = false;
+            this.btnSceneLoad.Click += new System.EventHandler(this.btnSceneLoad_Click);
             // 
             // btnSceneSave
             // 

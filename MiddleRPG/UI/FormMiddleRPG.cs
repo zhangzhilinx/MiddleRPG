@@ -79,7 +79,13 @@ namespace MiddleRPG
             }
             lblRoundIndicator.Text = isTurnToMonster ? "敌方回合" : "我方回合";
             if (isTurnToMonster)
+            {
+                AllowPlayerToArchive(false);
                 timerRound.Start();
+            } else
+            {
+                AllowPlayerToArchive(true);
+            }
             yield return winner;
 
             Random rand = new Random();
@@ -134,11 +140,13 @@ namespace MiddleRPG
                             }
                             //随后切换到我方回合
                             isTurnToMonster = !isTurnToMonster;
+                            AllowPlayerToArchive(true);
                             lblRoundIndicator.Text = "我方回合";
                         }
                         else
                         {   //判定敌方胜利
                             winner = Winner.Monsters;
+                            AllowPlayerToArchive(false);
                             lblRoundIndicator.Text = "敌方获胜";
                         }
                     }
@@ -146,6 +154,7 @@ namespace MiddleRPG
                     {   //没有怪物存活了
                         timerRound.Stop();
                         winner = Winner.Heros;
+                        AllowPlayerToArchive(false);
                         lblRoundIndicator.Text = "玩家获胜";
                     }
                 }
@@ -165,6 +174,7 @@ namespace MiddleRPG
                         if (!found)
                         {   //如果全部都攻击过，则切换回合，同时启动计时
                             isTurnToMonster = !isTurnToMonster;
+                            AllowPlayerToArchive(false);
                             lblRoundIndicator.Text = "敌方回合";
                             timerRound.Start();
                         }
@@ -173,6 +183,7 @@ namespace MiddleRPG
                     else
                     {
                         winner = Winner.Heros;
+                        AllowPlayerToArchive(false);
                         lblRoundIndicator.Text = "玩家获胜";
                         RefreshAvatarMonsters();
                     }
@@ -203,6 +214,16 @@ namespace MiddleRPG
             {   //刷新英雄们的头像
                 agentHero.RedrawAvatar();
             }
+        }
+
+        /// <summary>
+        /// 允许/不允许玩家存取游戏存档
+        /// </summary>
+        /// <param name="allow">是否允许</param>
+        public void AllowPlayerToArchive(bool allow)
+        {
+            btnSceneLoad.Enabled = allow;
+            btnSceneSave.Enabled = allow;
         }
 
         private void GameUnitHero_MouseDown(object sender, MouseEventArgs e)
@@ -266,10 +287,59 @@ namespace MiddleRPG
         private void btnSceneSave_Click(object sender, EventArgs e)
         {
             BinaryFormatter formatter = new BinaryFormatter();
+
+            List<KeyValuePair<Hero, bool>> herosWithPermit = agentHeros.Values
+                .Where(x => x?.Unit != null)
+                .Select(x => new KeyValuePair<Hero, bool>((Hero)x.Unit, x.PermitAttack))
+                .ToList();
+
+            List<Monster> monsters = (from x in agentMonsters.Values
+                                      where (x?.Unit != null)
+                                      select (Monster)x.Unit)
+                                     .ToList();
+
             using (FileStream stream = new FileStream(pathGameArchive, FileMode.Create))
             {
-                formatter.Serialize(stream, agentHeros);
-                formatter.Serialize(stream, agentMonsters);
+                formatter.Serialize(stream, herosWithPermit);
+                formatter.Serialize(stream, monsters);
+                stream.Flush();
+            }
+        }
+
+        private void btnSceneLoad_Click(object sender, EventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            List<KeyValuePair<Hero, bool>> herosWithPermit = null;
+            List<Monster> monsters = null;
+
+            using (FileStream stream = new FileStream(pathGameArchive, FileMode.Open))
+            {
+                herosWithPermit = (List<KeyValuePair<Hero, bool>>)formatter.Deserialize(stream);
+                monsters = (List<Monster>)formatter.Deserialize(stream);
+            }
+
+            agentHeros.Clear();
+            agentMonsters.Clear();
+            flayoutHeros.Controls.Clear();
+            flayoutMonsters.Controls.Clear();
+
+            foreach (KeyValuePair<Hero, bool> heroWithPermit in herosWithPermit)
+            {
+                UnitAgent gameUnit = new UnitAgent(heroWithPermit.Key);
+                gameUnit.PermitAttack = heroWithPermit.Value;
+                gameUnit.AttackMouseDown += GameUnitHero_MouseDown;
+                agentHeros.Add(heroWithPermit.Key.Id, gameUnit);
+                flayoutHeros.Controls.Add(gameUnit);
+            }
+
+            foreach (Monster monster in monsters)
+            {
+                UnitAgent gameUnit = new UnitAgent(monster);
+                gameUnit.DragEnter += GameUnitMonster_DragEnter;
+                gameUnit.DragDrop += GameUnitMonster_DragDrop;
+                gameUnit.AllowDrop = true;
+                agentMonsters.Add(monster.Id, gameUnit);
+                flayoutMonsters.Controls.Add(gameUnit);
             }
         }
     }

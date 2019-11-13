@@ -11,7 +11,6 @@ namespace MiddleRPG
     [Serializable]
     public partial class UnitAgent : UserControl
     {
-        private ToolTip tooltip = new ToolTip();
         private BattleUnit unit;
         public BattleUnit Unit {
             get { return unit; }

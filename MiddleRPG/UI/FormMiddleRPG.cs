@@ -327,6 +327,7 @@ namespace MiddleRPG
             {
                 herosWithPermit = (List<KeyValuePair<Hero, bool>>)formatter.Deserialize(stream);
                 monsters = (List<Monster>)formatter.Deserialize(stream);
+                stream.Dispose();
             }
 
             foreach (UnitAgent unitAgent in agentHeros.Values)
@@ -345,19 +346,6 @@ namespace MiddleRPG
             flayoutMonsters.Controls.Clear();
             agentHeros.Clear();
             agentMonsters.Clear();
-
-            //#region 调试代码，以下代码可能有助于发现UnitAgent内存无法被释放的关键原因
-            //for (int i = 0; i < 50; i++)
-            //{
-            //    UnitAgent unitAgent = new UnitAgent(new Archon(Guid.NewGuid().ToString()));
-            //    flayoutHeros.Controls.Add(unitAgent);
-            //}
-            //for (int i = flayoutHeros.Controls.Count-1; i >= 0; i--)
-            //{
-            //    var control = flayoutHeros.Controls[i];
-            //    control.Dispose();
-            //}
-            //#endregion
 
             foreach (KeyValuePair<Hero, bool> heroWithPermit in herosWithPermit)
             {

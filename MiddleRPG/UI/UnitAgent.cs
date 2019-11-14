@@ -1,7 +1,6 @@
 ﻿using MiddleRPG.Core;
 using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MiddleRPG
@@ -9,20 +8,20 @@ namespace MiddleRPG
     //[ToolboxItem(true)]
     //[ToolboxItemFilter("自定义控件")]
     //[DisplayName("GameRole")]
+    [Serializable]
     public partial class UnitAgent : UserControl
     {
-        private ToolTip tooltip = new ToolTip();
         private BattleUnit unit;
         public BattleUnit Unit {
             get { return unit; }
             private set {
-                if(unit != null)
+                if (unit != null)
                 {
                     unit.HealthChanged -= OnUnitHealthChanged;
                     unit.UnderAttack -= OnUnitUnderAttack;
                 }
                 unit = value;
-                if(unit != null)
+                if (unit != null)
                 {
                     unit.HealthChanged += new BattleUnit.OnHealthChangedHandler(OnUnitHealthChanged);
                     unit.UnderAttack += new BattleUnit.OnUnderAttackHandler(OnUnitUnderAttack);
@@ -148,6 +147,12 @@ namespace MiddleRPG
             {
                 AttackMouseDown(this, e);
             }
+        }
+
+        public new void Dispose()
+        {
+            Unit = null;
+            Dispose(true);
         }
 
         //public static class UtilProgressBar

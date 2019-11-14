@@ -35,6 +35,10 @@
             this.flayoutMonsters = new System.Windows.Forms.FlowLayoutPanel();
             this.lblRoundIndicator = new System.Windows.Forms.Label();
             this.timerRound = new System.Windows.Forms.Timer(this.components);
+            this.btnSceneLoad = new System.Windows.Forms.Button();
+            this.btnSceneSave = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // flayoutHeros
@@ -85,6 +89,49 @@
             // 
             this.timerRound.Tick += new System.EventHandler(this.TimerRound_Tick);
             // 
+            // btnSceneLoad
+            // 
+            this.btnSceneLoad.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSceneLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSceneLoad.Location = new System.Drawing.Point(226, 3);
+            this.btnSceneLoad.Name = "btnSceneLoad";
+            this.btnSceneLoad.Size = new System.Drawing.Size(142, 23);
+            this.btnSceneLoad.TabIndex = 3;
+            this.btnSceneLoad.Text = "恢复游戏";
+            this.btnSceneLoad.UseVisualStyleBackColor = false;
+            this.btnSceneLoad.Click += new System.EventHandler(this.btnSceneLoad_Click);
+            // 
+            // btnSceneSave
+            // 
+            this.btnSceneSave.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSceneSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSceneSave.Location = new System.Drawing.Point(374, 3);
+            this.btnSceneSave.Name = "btnSceneSave";
+            this.btnSceneSave.Size = new System.Drawing.Size(142, 23);
+            this.btnSceneSave.TabIndex = 4;
+            this.btnSceneSave.Text = "保存游戏";
+            this.btnSceneSave.UseVisualStyleBackColor = false;
+            this.btnSceneSave.Click += new System.EventHandler(this.btnSceneSave_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel1.Controls.Add(this.btnSceneLoad, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnSceneSave, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 532);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(744, 29);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
             // FormMiddleRPG
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -92,6 +139,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lblRoundIndicator);
             this.Controls.Add(this.flayoutMonsters);
             this.Controls.Add(this.flayoutHeros);
@@ -101,6 +149,7 @@
             this.Name = "FormMiddleRPG";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MiddleRPG";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,6 +161,9 @@
         private System.Windows.Forms.FlowLayoutPanel flayoutMonsters;
         private System.Windows.Forms.Label lblRoundIndicator;
         private System.Windows.Forms.Timer timerRound;
+        private System.Windows.Forms.Button btnSceneLoad;
+        private System.Windows.Forms.Button btnSceneSave;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 

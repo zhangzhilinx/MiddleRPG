@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.barHP = new System.Windows.Forms.ProgressBar();
             this.lblName = new System.Windows.Forms.Label();
             this.picAvatar = new System.Windows.Forms.PictureBox();
+            this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,5 +90,6 @@
         private System.Windows.Forms.ProgressBar barHP;
         private System.Windows.Forms.PictureBox picAvatar;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.ToolTip tooltip;
     }
 }

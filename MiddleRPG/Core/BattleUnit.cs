@@ -1,7 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace MiddleRPG.Core
 {
+    [Serializable]
     public class BattleUnit
     {
         public string Id { get; set; }
@@ -15,6 +17,7 @@ namespace MiddleRPG.Core
         public int Defense { get { return Agility / 10 + Intelligence / 50; } }
         public bool IsAlive { get { return Health > 0; } }
 
+        [Serializable]
         public class BitmapEffect
         {
             public Bitmap Attack { get; set; }
@@ -24,7 +27,9 @@ namespace MiddleRPG.Core
 
         public delegate void OnUnderAttackHandler(BattleUnit attacker, int power);
         public delegate void OnHealthChangedHandler(int life);
+        [field: NonSerialized]
         public event OnUnderAttackHandler UnderAttack;
+        [field: NonSerialized]
         public event OnHealthChangedHandler HealthChanged;
 
         public BattleUnit(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)
@@ -63,6 +68,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Hero : BattleUnit
     {
         public Hero(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)
@@ -71,6 +77,7 @@ namespace MiddleRPG.Core
         }
     }
 
+    [Serializable]
     class Monster : BattleUnit
     {
         public Monster(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)

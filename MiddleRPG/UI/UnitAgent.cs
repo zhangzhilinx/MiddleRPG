@@ -152,6 +152,7 @@ namespace MiddleRPG
         public new void Dispose()
         {
             Unit = null;
+            base.Dispose();
             Dispose(true);
         }
 

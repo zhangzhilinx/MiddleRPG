@@ -193,6 +193,16 @@ namespace MiddleRPG {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap effect_general_superattack {
+            get {
+                object obj = ResourceManager.GetObject("effect_general_superattack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap ui_boarder_hero {
             get {
                 object obj = ResourceManager.GetObject("ui_boarder_hero", resourceCulture);

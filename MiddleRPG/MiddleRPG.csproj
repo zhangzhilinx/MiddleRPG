@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\BattleUnit.cs" />
+    <Compile Include="Core\ISuperAttack.cs" />
     <Compile Include="Core\Units.cs" />
     <Compile Include="ResourceMain.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -148,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\effect_dead_general.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\effect_general_superattack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

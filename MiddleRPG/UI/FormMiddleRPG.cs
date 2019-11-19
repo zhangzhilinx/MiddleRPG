@@ -295,6 +295,8 @@ namespace MiddleRPG
 
         private void btnSceneSave_Click(object sender, EventArgs e)
         {
+            AllowPlayerToArchive(false);
+
             BinaryFormatter formatter = new BinaryFormatter();
 
             List<KeyValuePair<Hero, bool>> herosWithPermit = agentHeros.Values
@@ -315,10 +317,14 @@ namespace MiddleRPG
                 monsters = null;
                 stream.Flush();
             }
+
+            AllowPlayerToArchive(true);
         }
 
         private void btnSceneLoad_Click(object sender, EventArgs e)
         {
+            AllowPlayerToArchive(false);
+
             BinaryFormatter formatter = new BinaryFormatter();
             List<KeyValuePair<Hero, bool>> herosWithPermit = null;
             List<Monster> monsters = null;
@@ -370,6 +376,8 @@ namespace MiddleRPG
 
             herosWithPermit = null;
             monsters = null;
+
+            AllowPlayerToArchive(true);
         }
     }
 }

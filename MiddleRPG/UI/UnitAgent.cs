@@ -12,19 +12,23 @@ namespace MiddleRPG
     public partial class UnitAgent : UserControl
     {
         private BattleUnit unit;
-        public BattleUnit Unit {
+        public BattleUnit Unit
+        {
             get { return unit; }
-            private set {
+            private set
+            {
                 if (unit != null)
                 {
                     unit.HealthChanged -= OnUnitHealthChanged;
                     unit.UnderAttack -= OnUnitUnderAttack;
+                    unit.UnderSuperAttack -= OnUnitUnderSuperAttack;
                 }
                 unit = value;
                 if (unit != null)
                 {
                     unit.HealthChanged += new BattleUnit.OnHealthChangedHandler(OnUnitHealthChanged);
                     unit.UnderAttack += new BattleUnit.OnUnderAttackHandler(OnUnitUnderAttack);
+                    unit.UnderSuperAttack += new BattleUnit.OnUnderSuperAttackHandler(OnUnitUnderSuperAttack);
                     RefreshCanvas();
                     tooltip.SetToolTip(
                         picAvatar,
@@ -92,9 +96,22 @@ namespace MiddleRPG
             return output;
         }
 
+        private Bitmap DrawSuperAttack(Bitmap effect, Size size)
+        {
+            int width = size.Width, height = size.Height;
+            Bitmap output = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(output))
+            {
+                g.DrawImage(
+                    effect,
+                    new Rectangle(width >> 2, 0, width >> 1, height >> 2));
+            }
+            return output;
+        }
+
         public void RedrawAvatar()
         {
-            if(Unit != null)
+            if (Unit != null)
             {
                 picAvatar.Image = Unit.IsAlive && Unit.Effect.Dead != null
                     ? Unit.Avatar
@@ -104,7 +121,7 @@ namespace MiddleRPG
 
         public void RedrawHP()
         {
-            if(Unit != null)
+            if (Unit != null)
             {
                 int percentHealth = Convert.ToInt32(
                     Convert.ToDouble(Unit.Health) / Convert.ToDouble(Unit.Life) * 100.0);
@@ -119,7 +136,7 @@ namespace MiddleRPG
 
         public void RefreshCanvas()
         {
-            if(Unit != null)
+            if (Unit != null)
             {
                 lblName.Text = unit.Name;
                 lblName.ForeColor = unit.IsAlive ? Color.Green : Color.Red;
@@ -137,13 +154,20 @@ namespace MiddleRPG
         private void OnUnitUnderAttack(BattleUnit attacker, int power)
         {
             picAvatar.Image = OverlapImage(
-                Unit.Avatar,
+                new Bitmap(picAvatar.Image),
                 DrawEffect(attacker.Effect.Attack, Unit.Avatar.Size));
+        }
+
+        private void OnUnitUnderSuperAttack(BattleUnit attacker, int power)
+        {
+            picAvatar.Image = OverlapImage(
+                new Bitmap(picAvatar.Image),
+                DrawSuperAttack(attacker.Effect.SuperAttack, Unit.Avatar.Size));
         }
 
         private void PicAvatar_MouseDown(object sender, MouseEventArgs e)
         {
-            if(PermitAttack && AttackMouseDown != null)
+            if (PermitAttack && AttackMouseDown != null)
             {
                 AttackMouseDown(this, e);
             }

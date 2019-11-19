@@ -21,14 +21,18 @@ namespace MiddleRPG.Core
         public class BitmapEffect
         {
             public Bitmap Attack { get; set; }
+            public Bitmap SuperAttack { get; set; }
             public Bitmap Dead { get; set; }
         };
         public BitmapEffect Effect { get; set; } = new BitmapEffect();
 
         public delegate void OnUnderAttackHandler(BattleUnit attacker, int power);
+        public delegate void OnUnderSuperAttackHandler(BattleUnit attacker, int power);
         public delegate void OnHealthChangedHandler(int life);
         [field: NonSerialized]
         public event OnUnderAttackHandler UnderAttack;
+        [field: NonSerialized]
+        public event OnUnderSuperAttackHandler UnderSuperAttack;
         [field: NonSerialized]
         public event OnHealthChangedHandler HealthChanged;
 
@@ -43,7 +47,7 @@ namespace MiddleRPG.Core
             Intelligence = intelligence;
         }
 
-        public int Attack(BattleUnit enemy)
+        public virtual int Attack(BattleUnit enemy)
         {
             //return (enemy != null) ? enemy.Injured(this, Power) : -1;
             return enemy?.Injured(this, Power) ?? -1;
@@ -62,6 +66,24 @@ namespace MiddleRPG.Core
             {
                 Health = 0;
                 UnderAttack(attacker, damage);
+                HealthChanged(Health);
+            }
+            return Health;
+        }
+
+        public int SufferedSuperAttack(BattleUnit attacker, int power)
+        {
+            int damage = power - Defense;
+            if (damage < Health)
+            {
+                Health -= damage;
+                UnderSuperAttack(attacker, damage);
+                HealthChanged(Health);
+            }
+            else
+            {
+                Health = 0;
+                UnderSuperAttack(attacker, damage);
                 HealthChanged(Health);
             }
             return Health;

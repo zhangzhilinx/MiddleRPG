@@ -91,7 +91,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Hero : BattleUnit
+    public class Hero : BattleUnit
     {
         public Hero(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)
             : base(id, name, avatar, life, power, agility, intelligence)
@@ -100,7 +100,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Monster : BattleUnit
+    public class Monster : BattleUnit
     {
         public Monster(string id, string name, Bitmap avatar, int life, int power, int agility, int intelligence)
             : base(id, name, avatar, life, power, agility, intelligence)

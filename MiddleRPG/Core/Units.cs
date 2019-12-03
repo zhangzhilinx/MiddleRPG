@@ -5,8 +5,41 @@ using System.Text;
 
 namespace MiddleRPG.Core
 {
+    public class UnitFactory
+    {
+        public static DarkTemplar GetDarkTemplar(string id = null)
+        {
+            return new DarkTemplar(id ?? Guid.NewGuid().ToString());
+        }
+
+        public static HighTemplar GetHighTemplar(string id = null)
+        {
+            return new HighTemplar(id ?? Guid.NewGuid().ToString());
+        }
+
+        public static Archon GetArchon(string id = null)
+        {
+            return new Archon(id ?? Guid.NewGuid().ToString());
+        }
+
+        public static Hydralisk GetHydralisk(string id = null)
+        {
+            return new Hydralisk(id ?? Guid.NewGuid().ToString());
+        }
+
+        public static Queen GetQueen(string id = null)
+        {
+            return new Queen(id ?? Guid.NewGuid().ToString());
+        }
+
+        public static Ultralisk GetUltralisk(string id = null)
+        {
+            return new Ultralisk(id ?? Guid.NewGuid().ToString());
+        }
+    }
+
     [Serializable]
-    class DarkTemplar : Hero, ISuperAttack
+    public class DarkTemplar : Hero, ISuperAttack
     {
         private readonly int superAttackPower = 15;
         private readonly int superAttackProbabilityBonus = 5;
@@ -55,7 +88,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class HighTemplar : Hero, ISuperAttack
+    public class HighTemplar : Hero, ISuperAttack
     {
         private readonly int superAttackPower = 10;
         private readonly int superAttackProbabilityBonus = 4;
@@ -104,7 +137,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Archon : Hero, ISuperAttack
+    public class Archon : Hero, ISuperAttack
     {
         private readonly int superAttackPower = 20;
         private readonly int superAttackProbabilityBonus = 15;
@@ -153,7 +186,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Hydralisk : Monster
+    public class Hydralisk : Monster
     {
         public Hydralisk(string id) : base(
             id,
@@ -171,7 +204,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Queen : Monster
+    public class Queen : Monster
     {
         public Queen(string id) : base(
             id,
@@ -189,7 +222,7 @@ namespace MiddleRPG.Core
     }
 
     [Serializable]
-    class Ultralisk : Monster
+    public class Ultralisk : Monster
     {
         public Ultralisk(string id) : base(
             id,

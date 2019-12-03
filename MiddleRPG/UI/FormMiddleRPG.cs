@@ -38,14 +38,14 @@ namespace MiddleRPG
             InitializeComponent();
 
             Hero[] initHeros = new Hero[] {
-                new Archon(Guid.NewGuid().ToString()),
-                new DarkTemplar(Guid.NewGuid().ToString()),
-                new HighTemplar(Guid.NewGuid().ToString())
+                UnitFactory.GetArchon(),
+                UnitFactory.GetDarkTemplar(),
+                UnitFactory.GetHighTemplar()
             };
             Monster[] initMonsters = new Monster[] {
-                new Queen(Guid.NewGuid().ToString()),
-                new Hydralisk(Guid.NewGuid().ToString()),
-                new Ultralisk(Guid.NewGuid().ToString())
+                UnitFactory.GetQueen(),
+                UnitFactory.GetHydralisk(),
+                UnitFactory.GetUltralisk()
             };
 
             foreach (Hero hero in initHeros)

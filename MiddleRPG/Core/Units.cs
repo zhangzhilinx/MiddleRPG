@@ -1,41 +1,113 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 
 namespace MiddleRPG.Core
 {
     public class UnitFactory
     {
-        public static DarkTemplar GetDarkTemplar(string id = null)
+        /// <summary>
+        /// 记录所有英雄类型名，及其对应的运行时类型
+        /// </summary>
+        public static Dictionary<string, Type> kvHero = new Dictionary<string, Type>();
+        /// <summary>
+        /// 记录所有怪物类型名，及其对应的运行时类型
+        /// </summary>
+        public static Dictionary<string, Type> kvMonster = new Dictionary<string, Type>();
+
+        /// <summary>
+        /// UnitFactory的静态初始化
+        /// 利用反射机制获取当前域内可以找到的所有英雄与怪物类
+        /// </summary>
+        static UnitFactory()
+        {
+            // 获取当前域下的所有程序集，以实现所需要的反射功能
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (Assembly asm in assemblies)
+            {   // 遍历每个程序集获取所有类型
+                Type[] types = asm.GetTypes();
+                for (int j = 0; j < types.Length; j++)
+                {
+                    if (types[j].IsSubclassOf(typeof(Hero)))
+                    {
+                        kvHero.Add(types[j].Name, types[j]);
+                    }
+                    else if (types[j].IsSubclassOf(typeof(Monster)))
+                    {
+                        kvMonster.Add(types[j].Name, types[j]);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 根据所需英雄类型获取对应的英雄对象
+        /// </summary>
+        /// <param name="typeHero">英雄类型</param>
+        /// <param name="id">英雄对象唯一识别码</param>
+        /// <returns>成功时返回对应的英雄对象，失败时返回null</returns>
+        public static Hero CreateHero(string typeHero, string id = null)
+        {
+            if (kvHero.TryGetValue(typeHero, out Type classHero))
+            {
+                return Activator.CreateInstance(
+                        classHero,
+                        new object[] { id ?? Guid.NewGuid().ToString() }
+                    ) as Hero;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 根据所需怪物类型获取对应的怪物对象
+        /// </summary>
+        /// <param name="typeMonster">怪物类型</param>
+        /// <param name="id">怪物对象唯一识别码</param>
+        /// <returns>成功时返回对应的怪物对象，失败时返回null</returns>
+        public static Monster CreateMonster(string typeMonster, string id = null)
+        {
+            if (kvMonster.TryGetValue(typeMonster, out Type classMonster))
+            {
+                return Activator.CreateInstance(
+                        classMonster,
+                        new object[] { id ?? Guid.NewGuid().ToString() }
+                    ) as Monster;
+            }
+            return null;
+        }
+
+        #region 早期简单的工厂模式实现
+        public static DarkTemplar CreateDarkTemplar(string id = null)
         {
             return new DarkTemplar(id ?? Guid.NewGuid().ToString());
         }
 
-        public static HighTemplar GetHighTemplar(string id = null)
+        public static HighTemplar CreateHighTemplar(string id = null)
         {
             return new HighTemplar(id ?? Guid.NewGuid().ToString());
         }
 
-        public static Archon GetArchon(string id = null)
+        public static Archon CreateArchon(string id = null)
         {
             return new Archon(id ?? Guid.NewGuid().ToString());
         }
 
-        public static Hydralisk GetHydralisk(string id = null)
+        public static Hydralisk CreateHydralisk(string id = null)
         {
             return new Hydralisk(id ?? Guid.NewGuid().ToString());
         }
 
-        public static Queen GetQueen(string id = null)
+        public static Queen CreateQueen(string id = null)
         {
             return new Queen(id ?? Guid.NewGuid().ToString());
         }
 
-        public static Ultralisk GetUltralisk(string id = null)
+        public static Ultralisk CreateUltralisk(string id = null)
         {
             return new Ultralisk(id ?? Guid.NewGuid().ToString());
         }
+        #endregion
     }
 
     [Serializable]

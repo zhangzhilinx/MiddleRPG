@@ -37,16 +37,23 @@ namespace MiddleRPG
         {
             InitializeComponent();
 
-            Hero[] initHeros = new Hero[] {
-                UnitFactory.GetArchon(),
-                UnitFactory.GetDarkTemplar(),
-                UnitFactory.GetHighTemplar()
-            };
-            Monster[] initMonsters = new Monster[] {
-                UnitFactory.GetQueen(),
-                UnitFactory.GetHydralisk(),
-                UnitFactory.GetUltralisk()
-            };
+            //Hero[] initHeros = new Hero[] {
+            //    UnitFactory.CreateArchon(),
+            //    UnitFactory.CreateDarkTemplar(),
+            //    UnitFactory.CreateHighTemplar()
+            //};
+            //Monster[] initMonsters = new Monster[] {
+            //    UnitFactory.CreateQueen(),
+            //    UnitFactory.CreateHydralisk(),
+            //    UnitFactory.CreateUltralisk()
+            //};
+
+            Hero[] initHeros = new string[] { "Archon", "DarkTemplar", "HighTemplar" }
+                .Select(x => UnitFactory.CreateHero(x))
+                .ToArray();
+            Monster[] initMonsters = new string[] { "Queen", "Hydralisk", "Ultralisk" }
+                .Select(x => UnitFactory.CreateMonster(x))
+                .ToArray();
 
             foreach (Hero hero in initHeros)
             {
@@ -88,7 +95,8 @@ namespace MiddleRPG
             {
                 AllowPlayerToArchive(false);
                 timerRound.Start();
-            } else
+            }
+            else
             {
                 AllowPlayerToArchive(true);
             }
